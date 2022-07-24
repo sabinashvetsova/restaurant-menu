@@ -18,13 +18,20 @@ from django.urls import path, include
 from rest_framework import routers
 
 from menu import views
+from menu.views import DishApiView
 
 router = routers.DefaultRouter()
-router.register(r"dishes", views.DishViewSet)
 router.register(r"categories", views.CategoryViewSet)
 router.register(r"allergens", views.AllergenViewSet)
 
 urlpatterns = [
     path("", include(router.urls)),
     path("admin/", admin.site.urls),
+    path("menu/", views.menu_index, name="menu_index"),
+    path("order/<str:dish_id>/add", views.add_to_order, name="add_to_order"),
+    path(
+        "order/<str:dish_id>/remove", views.remove_from_order, name="remove_from_order"
+    ),
+    path("order/", views.view_an_order, name="order"),
+    path("dishes/", DishApiView.as_view(), name="dishes"),
 ]

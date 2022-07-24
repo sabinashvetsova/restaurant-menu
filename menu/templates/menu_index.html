@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<h1>Dishes</h1>
+{% for category in categories %}
+<h5>{{ category.name }}</h5>
+<div class="container">
+    <div class="row">
+        {% for dish in category.dish_set.all %}
+        <div class="col-sm">
+            <img src="{% static dish.image %}">
+            <h5>{{ dish.name }}</h5>
+            {% if dish.allergens.all %}
+            <p> Allergens:
+                {% for allergen in dish.allergens.all %}
+                {{ allergen.name }}
+                {% endfor %}
+             {% endif %}
+            </p>
+            <p>{{ dish.energy_value }} kcal</p>
+            <p>{{ dish.price }} $</p>
+            <a href="/order/{{ dish.id }}/add" type="button" class="btn btn-success"><span class="bi bi-plus"></span></a>
+            <a href="/order/{{ dish.id }}/remove" type="button" class="btn btn-outline-danger"><span class="bi bi-dash"></span></a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endfor %}
+<div>
+    <a href="/order" class="btn btn-warning float-right">
+        Make an order
+    </a>
+</div>
+{% endblock %}

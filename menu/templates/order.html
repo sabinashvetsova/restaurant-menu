@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_content %}
+<h1>Order</h1>
+{% for dish in dishes %}
+<h5>{{ dish.name }} x {{ dish.count }}</h5>
+{% if dish.allergens.all %}
+<p> Allergens:
+    {% for allergen in dish.allergens.all %}
+    {{ allergen.name }}
+    {% endfor %}
+    {% endif %}
+</p>
+{% endfor %}
+<h3>Order price</h3>
+<p>{{ price }} $</p>
+{% endblock %}
